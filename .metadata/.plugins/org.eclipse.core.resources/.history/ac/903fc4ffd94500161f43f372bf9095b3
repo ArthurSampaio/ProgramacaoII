@@ -1,0 +1,31 @@
+package lab03.economizap2.leitor;
+import java.util.Scanner;
+
+public class Input {
+	
+	public static Scanner sc = new Scanner(System.in);
+	
+	
+	public static int inteiro(String mensagem){
+		System.out.println(mensagem);
+		int qualquer = sc.nextInt();
+		sc.nextLine();
+		return qualquer;
+	}
+	
+	public static double real (String mensagem){
+		System.out.println(mensagem);
+		double qualquer = sc.nextDouble();
+		sc.nextLine();
+		return qualquer;
+	}
+	
+	public static String string (String mensagem){
+		System.out.println(mensagem);
+		String qualquer = sc.next();
+		sc.nextLine();
+		return qualquer;
+	}
+	
+	
+}

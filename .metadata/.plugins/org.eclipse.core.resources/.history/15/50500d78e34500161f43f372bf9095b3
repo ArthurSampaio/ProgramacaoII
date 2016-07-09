@@ -1,0 +1,98 @@
+package lab03.economizap2.caixa;
+import lab03.economizap2.produto.Produto;
+import lab03.economizap2.leitor.Input;
+import lab03.economizap2.estoque.Estoque;	
+
+/*
+ * Classe Caixa (Principal do Laboratório 03)
+ * 
+ * @author Arthur Sampaio
+ * @version 1.0
+ * 
+ * 2016, Universidade Federal de Campina Grande
+ * 
+ */
+
+
+
+public class Caixa {
+	private double saidaTotal = 0.0; 	
+	private static Estoque estoque = new Estoque();
+	public static Input input = new Input();
+	
+	public static final int CADASTRAR = 1;
+	public static final int VENDER = 2;
+	public static final int IMPRIMIR = 3;
+	
+	
+	public static void main(String[] args){
+		while (true) {
+			menu();
+			int entrada = input.inteiro("Opção: ");
+			
+				switch(entrada){
+				
+				case CADASTRAR:
+					cadastraProduto();
+					break;
+				
+				case VENDER:
+					vendeProduto();
+					break;
+					
+				case IMPRIMIR:
+					imprimiBalanço();
+					break;
+					
+				default: 
+					System.exit(0);
+				}
+		}
+				
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Imprime o menu inicial
+	 */
+	public static void menu(){
+	
+		System.out.println("====Bem-vindo(a) ao EconomizaP2====");
+		System.out.println("Digite a opção desejada:");
+		System.out.println("1-Cadastrar um Produto");
+		System.out.println("2-Vender um Produto");
+		System.out.println("3-Imprimir Balanço");
+		System.out.println("4-Sair");
+		System.out.println();
+		
+		
+	}
+	
+	/**
+	 * Recebe as informações do produto;
+	 * Instancia um objeto do tipo Produto;
+	 * Insere o produto no Estoque;
+	 */
+	
+	public static void cadastraProduto(){
+		String opcao = "Nao";
+		do{
+			String nome = input.string("Digite o nome do produto: ");
+			double preco = input.real("Digite o preço unitário do produto: ");
+			String categoria = input.string("Digite o tipo do produto: ");
+			int quantidade = input.inteiro("Digite a quantidade no estoque: ");
+			Produto produto = new Produto(nome,categoria, preco, quantidade);
+			if (estoque.insereProduto(produto)){
+				System.out.println(quantidade + "''"+ nome + "''" + " cadastrado(s) com sucesso.");
+			}
+			System.out.println();
+			opcao = input.string("Deseja cadastrar outro produto? ");
+						
+		}while(opcao.equals("Sim"));
+	}
+	
+	
+}
