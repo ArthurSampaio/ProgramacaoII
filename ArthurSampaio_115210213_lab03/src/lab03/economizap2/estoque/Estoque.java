@@ -15,7 +15,7 @@ import lab03.economizap2.produto.Produto;
 public class Estoque {
 	
 	private int indice = 0;
-	private int tamanho = 5;
+	private int tamanho = 1;
 	private Produto[] estoque = new Produto[tamanho];
 	public String quebraLinha = System.getProperty("line.separator");
 	public static final int FALSE = -1; 
@@ -28,7 +28,7 @@ public class Estoque {
 	 * Verifica a Quantidade de produtos, se estiver perto de preencher o array ele chama o método aumentaQuantidadeProdutos
 	 */
 	public void verificaQuantidadeProdutos(){
-		if (estoque.length ==  tamanho-1){
+		if (estoque.length ==  indice + 1){
 			aumentaQuantidadeProdutos();
 		}
 	}
@@ -38,7 +38,7 @@ public class Estoque {
 	 */
 	public void aumentaQuantidadeProdutos(){
 		Produto[] novoEstoque = new Produto[tamanho * 2];
-		for(int i = 0; i < tamanho-1; i++){
+		for(int i = 0; i < indice; i++){
 			novoEstoque[i] = estoque[i];
 		}
 		setTamanho(tamanho * 2);
@@ -62,12 +62,11 @@ public class Estoque {
 	 * @return True se estiver, false caso contrário
 	 */
 	public boolean verificaEstoque (String nomeProduto){
-		
-		if (pesquisaPorNome(nomeProduto) != FALSE){
-			return true;			
-		}
-		
-		return false;
+		for (int i = 0; i < indice; i++){
+			if (estoque[i].getNome().equals(nomeProduto)){
+			return true;	
+			}
+		}return false;
 	}
 	
 	/**
@@ -87,7 +86,13 @@ public class Estoque {
 			if (estoque[indice].retiraQuantidadeProduto(qtd)){
 				return true;
 			}
-		}return false;
+			else{
+				return false;
+			}	
+		}
+		else {
+			return false;
+		}
 	}	
 	
 	/**
@@ -98,8 +103,8 @@ public class Estoque {
 	 * @return o indice do produto ou FALSE 
 	 */
 	public int pesquisaPorNome(String nomeProduto){
-		for (int i = 0; i < tamanho; i++){
-			if (estoque[i].getNome() == nomeProduto){
+		for (int i = 0; i < indice; i++){
+			if (estoque[i].getNome().equals(nomeProduto)){
 				return i;
 			}
 		}		
@@ -175,10 +180,23 @@ public class Estoque {
 	 * Lista todos os produtos cadastrados com nome, categoria, preço e quantidade;
 	 */
 	public void imprimeTodosProdutos(){
-		for (int i = 0; i <= indice; i++){
-			estoque[i].toString();			
+		for (int i = 0; i < indice; i++){
+			System.out.printf("\t %d) %s", (i+1),estoque[i].toString());	
+			System.out.println();
 		}
 	}
 	
+	/**
+	 * Calcular o valor que ainda pode ser arrecado por cada produto e retorna o valor da arrecadação total
+	 * @return podeGanhar;
+	 * 			Valor que ainda é esperado arrecadar com as vendas
+	 */
+	public double quantoPodeGanhar(){
+		double podeGanhar = 0;
+		for (int i = 0; i < indice; i++){
+			podeGanhar += estoque[i].getPreco() * estoque[i].getQuantidade();
+		}
+		return podeGanhar;
+	}
 
 }

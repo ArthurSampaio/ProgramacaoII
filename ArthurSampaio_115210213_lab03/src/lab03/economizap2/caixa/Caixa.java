@@ -13,7 +13,7 @@ import lab03.economizap2.estoque.Estoque;
  * 
  */
 public class Caixa {
-	private double saidaTotal = 0.0; 	
+	private static double saidaTotal = 0.0; 	
 	private static Estoque estoque = new Estoque();
 	public static Input input = new Input();
 	
@@ -55,11 +55,7 @@ public class Caixa {
 		}
 				
 	}
-	
-	
-	
-	
-	
+		
 	/**
 	 * Imprime o menu inicial
 	 */
@@ -72,8 +68,6 @@ public class Caixa {
 		System.out.println("3-Imprimir Balanço");
 		System.out.println("4-Sair");
 		System.out.println();
-		
-		
 	}
 	
 	/**
@@ -120,6 +114,9 @@ public class Caixa {
 					System.out.println("===> Total arrecadado: R$ " + calculaValorDaVenda(nomeProduto, quantidadeVendida));
 					System.out.println();
 				}
+				else{
+					System.out.println("Não é possível vender pois não há " + nomeProduto + " suficiente");
+				}
 			}
 			
 			else{
@@ -136,7 +133,12 @@ public class Caixa {
 	public static void imprimeBalanco(){
 		System.out.println("= = = = Impressao de Balanco = = =");
 		System.out.println("Produtos cadastrados: ");
-		
+		estoque.imprimeTodosProdutos();	
+		System.out.println();
+		System.out.println("Total arrecadado em vendas: R$ " + getSaidaTotal());
+		System.out.println("Total que pode ser arrecadado: R$ " + estoque.quantoPodeGanhar());
+		input.line("");
+				
 	}
 	
 	/**
@@ -147,12 +149,26 @@ public class Caixa {
 	 * 			Quantidade do produto vendida
 	 * @return
 	 */
-	public double calculaValorDaVenda(String nomeProduto, int quantidadeVendida){
+	public static double calculaValorDaVenda(String nomeProduto, int quantidadeVendida){
 		double precoUnitario = estoque.getPrecoProduto(nomeProduto);
 		double valorOperacao = precoUnitario * quantidadeVendida;
 		saidaTotal += valorOperacao;
 		return valorOperacao;
 	}
+	
+	
+
+	/**
+	 * Recupera o valor do total arrecadado em vendas	
+	 * @return saidaTotal
+	 */
+	public static double getSaidaTotal() {
+		return saidaTotal;
+	}
+
+	
+	
+	
 	
 	
 }	

@@ -99,7 +99,7 @@ public class Produto {
 	 * Retorna a representação em string do produto;
 	 */
 	public String toString(){
-		return "Nome (" + getCategoria() + "). R$" + getPreco() + " Restante: " + getQuantidade();
+		return getNome() + "(" + getCategoria() + "). R$" + getPreco() + " Restante: " + getQuantidade();
 	}
 	
 }

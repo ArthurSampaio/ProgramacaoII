@@ -45,5 +45,11 @@ public class Input {
 		return qualquer;
 	}
 	
+	public String line (String mensagem){
+		System.out.print(mensagem);
+		String qualquer = sc.nextLine();
+		sc.nextLine();
+		return qualquer;
+	}
 	
 }
