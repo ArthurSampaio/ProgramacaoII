@@ -1,0 +1,8 @@
+.metadata
+.recommenders 
+bin/
+tmp/
+*.tmp
+.loadpath
+.settings
+*.launch
