@@ -27,7 +27,7 @@ public class Caixa {
 	public static final int FALSE = -1; 
 	
 	
-	public static void main(String[] args){
+	public void menuCaixa(){
 		while (true) {
 			menu();
 			int entrada = input.inteiro("Opção: ");
@@ -59,7 +59,7 @@ public class Caixa {
 	/**
 	 * Imprime o menu inicial
 	 */
-	public static void menu(){
+	public void menu(){
 	
 		System.out.println("====Bem-vindo(a) ao EconomizaP2====");
 		System.out.println("Digite a opção desejada:");
@@ -73,7 +73,7 @@ public class Caixa {
 	/**
 	 * Recebe os atributos do tipo Produto e instancia um objeto, em seguida este objeto é adicionado ao estoque
 	 */
-	public static void cadastraProduto(){
+	public void cadastraProduto(){
 		String opcao = "Nao";
 		do{
 			String nome = input.string("Digite o nome do produto: ");
@@ -98,7 +98,7 @@ public class Caixa {
 	/**
 	 * Realiza a venda de produtos
 	 */
-	public static void vendeProduto(){
+	public void vendeProduto(){
 		String opcao = "Nao";
 		System.out.println("= = = = Venda de Produtos = = = = ");
 		do{
@@ -130,7 +130,7 @@ public class Caixa {
 	
 	
 	
-	public static void imprimeBalanco(){
+	public void imprimeBalanco(){
 		System.out.println("= = = = Impressao de Balanco = = =");
 		System.out.println("Produtos cadastrados: ");
 		estoque.imprimeTodosProdutos();	
@@ -149,7 +149,7 @@ public class Caixa {
 	 * 			Quantidade do produto vendida
 	 * @return
 	 */
-	public static double calculaValorDaVenda(String nomeProduto, int quantidadeVendida){
+	public double calculaValorDaVenda(String nomeProduto, int quantidadeVendida){
 		double precoUnitario = estoque.getPrecoProduto(nomeProduto);
 		double valorOperacao = precoUnitario * quantidadeVendida;
 		saidaTotal += valorOperacao;
@@ -162,7 +162,7 @@ public class Caixa {
 	 * Recupera o valor do total arrecadado em vendas	
 	 * @return saidaTotal
 	 */
-	public static double getSaidaTotal() {
+	public double getSaidaTotal() {
 		return saidaTotal;
 	}
 
