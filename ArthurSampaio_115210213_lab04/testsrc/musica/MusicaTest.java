@@ -1,9 +1,6 @@
 package musica;
 import musica.Musica;
 
-<<<<<<< HEAD
-//Código gerado pelos monitores da disciplina e revisado pelos professores
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -38,40 +35,10 @@ public class MusicaTest{
 		} catch (Exception e) {
 			fail();// nao deveria ter lancado nenhuma Exception nesse teste.
 		}
-=======
-
-import static org.junit.Assert.*;
-import org.junit.Test;
-
-public class MusicaTest {
-
-	@Test
-	public void testMusica() {
-		Musica chandelier = new Musica("Chandelier", 3, "Pop");
-		Musica elasticHeart = new Musica("Elastic Heart", 3, "Pop");
-		Musica cellophane = new Musica("Cellophane", 4, "Pop");
-
-		assertEquals("Chandelier", chandelier.getTitulo());	
-		assertEquals(3, chandelier.getDuracao());
-		assertEquals("Pop", chandelier.getGenero());
-
-		assertEquals("Elastic Heart", elasticHeart.getTitulo());
-		assertEquals(3, elasticHeart.getDuracao());
-		assertEquals("Pop", elasticHeart.getGenero());
-
-		assertEquals("Cellophane", cellophane.getTitulo());
-		assertEquals(4, cellophane.getDuracao());
-		assertEquals("Pop", cellophane.getGenero());
-
-		Musica chandelierRemix = new Musica("Chandelier", 3, "Pop");
-		assertEquals(chandelier, chandelierRemix);
-		assertFalse(chandelier.equals(cellophane));
->>>>>>> e22039b2ec3f9cd96afeca931750aa11034063bf
 	}
 
 	@Test
 	public void testEquals() {
-<<<<<<< HEAD
 		Musica chandelier;
 		try {
 			chandelier = new Musica("Chandelier", 3, "Pop");
@@ -124,15 +91,5 @@ public class MusicaTest {
 			assertEquals("Genero da musica nao pode ser nulo ou vazio.", e.getMessage());
 		}
 
-=======
-		Musica chandelier = new Musica("Chandelier", 3, "Pop");
-		Musica elasticHeart = new Musica("Elastic Heart", 3, "Pop");
-		Musica cellophane = new Musica("Cellophane", 4, "Pop");
-
-		assertEquals(chandelier, new Musica("Chandelier", 3, "Pop"));
-		assertEquals(chandelier, new Musica("Chandelier", 3, "Pop-rock"));
-		assertNotEquals(elasticHeart, chandelier);
-		assertNotEquals(elasticHeart, cellophane);
->>>>>>> e22039b2ec3f9cd96afeca931750aa11034063bf
 	}
 }

@@ -25,7 +25,7 @@ public class AlbumTest {
 			darkSideRemastered = new Album("Pink Floyd",
 					"The Dark Side of The Moon", 1973);
 		} catch (Exception e) {
-			fail("Nao deveria ter ocorrido nenhum erro.");
+			fail("Nao deveria ter ocorrido nenhum erro1.");
 		}
 	}
 
@@ -84,5 +84,4 @@ public class AlbumTest {
 		}
 	}
 	
-}	
-	
+}
