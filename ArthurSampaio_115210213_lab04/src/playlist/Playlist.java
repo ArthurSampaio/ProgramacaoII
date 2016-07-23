@@ -1,6 +1,5 @@
 package playlist;
 import musica.Musica;
-import java.util.HashMap;
 import album.Album;
 import java.util.ArrayList;
 
@@ -17,13 +16,25 @@ public class Playlist {
 			this.namePlaylist = name;
 		}
 	}
-
-	public boolean addMusic(String namePlaylist, )
-	
+		
+	public void setNamePlaylist(String newName){
+		this.namePlaylist = newName;
+	}
 	
 	public String getNamePlaylist(){
 		return this.namePlaylist;
 	}
 	
-	public boolean addMusicFromAlbum ()
+	public boolean addMusic (Musica newMusic){
+		return this.musicas.add(newMusic);
+	}
+	
+	public Musica getMusica (String findMusic){
+		for (Musica musica : musicas){
+			if (musica.getTitulo().equals(findMusic)){
+				return musica;
+			}
+		}return null;
+	}
+	
 }

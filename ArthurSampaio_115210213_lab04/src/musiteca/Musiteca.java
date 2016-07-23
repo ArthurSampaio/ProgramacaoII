@@ -2,14 +2,17 @@ package musiteca;
 import playlist.Playlist;
 import album.Album;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
+import musica.Musica;
 
 
 public class Musiteca {
 	private HashSet<Album> albuns = new HashSet<Album>();
 	private ArrayList<Album> favoritos = new ArrayList<Album>();
 	private HashMap <String, Playlist> playlist = new HashMap<String, Playlist>();
+	
 	
 	public Musiteca(){
 		
@@ -100,25 +103,78 @@ public class Musiteca {
 		}
 	}
 	
-	public ArrayList getAlbunsFavoritos(){
+	public ArrayList<Album> getAlbunsFavoritos(){
 		return this.favoritos;
 	}
 	
 	public boolean addPlaylist(Object otherPlaylist){
-		if (otherPlaylist instanceof Playlist){
+		if(otherPlaylist instanceof Playlist){
 			Playlist newPlaylist = (Playlist)otherPlaylist;
-			if (this.playlist.containsKey(newPlaylist)){
-				return false;				
-			}else{
-				playlist.put(newPlaylist.getNamePlaylist(), newPlaylist);
+			if (this.playlist.containsKey(newPlaylist.getNamePlaylist())){
+				return false;
+			} 
+			else{
+				String nome = newPlaylist.getNamePlaylist();
+				this.playlist.put(nome, newPlaylist);
 				return true;
 			}
 		}else{
 			return false;
 		}
 	}
+
+	public boolean addMusicaToPlaylist (String namePlaylist, String nameAlbum, int track) throws Exception{
+		Playlist foundPlaylist;
+		Album album;
+		Musica music;
+		
+		if (!(this.playlist.containsKey(namePlaylist))){
+			try{
+				foundPlaylist = new Playlist(namePlaylist);
+				this.playlist.put(namePlaylist, foundPlaylist);
+			}catch(Exception exception){
+				System.out.println(exception.getMessage());
+			}
+		}
+		if (this.getAlbum(nameAlbum) != null){
+			album = this.getAlbum(nameAlbum);
+			music = album.getMusica(track);
+			foundPlaylist = this.playlist.get(namePlaylist);
+			if (music != null){
+				if (foundPlaylist.addMusic(music)){
+					this.playlist.put(namePlaylist, foundPlaylist);
+					return true;
+				}else{
+					return false;
+				}
+			}else{
+				return false;
+			}
+		}else{ 
+			throw new Exception("Album nao pertence ao Perfil especificado");
+		}
+	}
 	
-	public boolean addMusicaToPlaylist(String namePlaylist, String nameAlbum, int track)
+	//search for a music in playlists
+	public Musica getMusicaFromPlaylists(String nameMusic){
+		for(Map.Entry<String, Playlist> entry: this.playlist.entrySet()){
+			if (entry.getValue().getMusica(nameMusic) != null){
+				return entry.getValue().getMusica(nameMusic);
+			}
+			
+		}return null;		
+	}
+	
+	public boolean containsPlaylist(Playlist otherPlaylist){
+		if (this.playlist.containsKey(otherPlaylist.getNamePlaylist())){
+			return true;
+		}else{
+			return false;			
+		}
+	}
+	
+	
+	
 	
 }
 	
