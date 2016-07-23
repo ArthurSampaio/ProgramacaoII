@@ -37,4 +37,13 @@ public class Playlist {
 		}return null;
 	}
 	
+	public boolean removeMusic(String nameMusic){
+		for (Musica musica : musicas){
+			if (musica.getTitulo().equals(nameMusic)){
+				musicas.remove(musica);
+			}
+		}return false;
+	}
+	
+	
 }

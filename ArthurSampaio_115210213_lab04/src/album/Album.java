@@ -141,7 +141,6 @@ public class Album {
 		}
 	}
 	
-	
 	//GETRS
 	public String getArtista() {
 		return this.artista;
@@ -179,7 +178,15 @@ public class Album {
 	}
 
 	public String toString(){
-		return String.format("Nome: %s, Artista: %s, Duracao total de %d, %d faixas. ", this.getTitulo(),this.getArtista(),this.getDuracao(),musicas.size());
+		return String.format("\nArtista: %s - Titulo: %s - Ano: %d", this.getArtista(),this.getTitulo(),this.getDuracao());
+	}
+	
+	public boolean containsMusic(String nameMusic){
+		for (Musica musica : musicas){
+			if (musica.getTitulo().equals(nameMusic)){
+				return true;
+			}
+		}return false;
 	}
 	
 }
