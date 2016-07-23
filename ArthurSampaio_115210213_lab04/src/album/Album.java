@@ -94,10 +94,10 @@ public class Album {
 	}
 	
 	//Remove Música
-	public boolean removeMusica(String tituloMusica) throws Exception{
+	public boolean removeMusica(String tituloMusica){
 		
 		if (tituloMusica == null || tituloMusica.trim().isEmpty()){
-			throw new Exception ("Titulo do album nao pode ser nulo ou vazio.");
+			return false;
 		}
 		else {
 			for (int i = 0; i < musicas.size(); i++){

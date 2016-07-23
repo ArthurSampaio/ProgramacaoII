@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 /**
  * Classe Input,
- * Para ler dados e imprimir a mensagem de inteiros, real e strings
+ * Para ler dados e imprimir a mensagem de inteiros, real, strings e linhas
  * 
  * @author Arthur Sampaio
  * @version 1.0
@@ -41,7 +41,7 @@ public class Input {
 	public  String string (String mensagem){
 		System.out.print(mensagem);
 		String qualquer = sc.next();
-		sc.nextLine();
+		sc.nextLine();	
 		return qualquer;
 	}
 	
