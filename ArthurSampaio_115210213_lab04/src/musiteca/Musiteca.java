@@ -84,14 +84,18 @@ public class Musiteca {
 	
 	//add music to the specific album with nameAlbum
 	public boolean addMusicaToAlbum(String nameAlbum, String nameMusic, int time, String genre){
-		if (this.getAlbum(nameAlbum) != null){
-			Album album = this.getAlbum(nameAlbum);
-			return album.addMusica(nameMusic, time, genre);
-		}else{
-			return false; 
+		if (this.getAlbum(nameAlbum) == null){
+			return false;
+		}
+		else{
+			for (Album album : albuns){
+				if(album.getTitulo().equals(nameAlbum)){
+					album.addMusica(nameMusic, time, genre);
+					return true;
+				}
+			}return false;
 		}
 	}
-	
 	//remove a music to the specific album with nameAlbum
 	public boolean removeMusicaFromAlbum(String nameAlbum, String nameMusic){
 		if (this.getAlbum(nameAlbum) != null){

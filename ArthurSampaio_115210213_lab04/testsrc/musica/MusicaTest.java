@@ -8,88 +8,66 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-public class MusicaTest{
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+
+public class MusicaTest {
+
+	private Musica musica;
+	private String tituloMusica = "Formation";
+	private int duracaoEsperada = 5;
+	private String generoEsperado = "Pop";	
+	
+	@Before
+	public void setup() throws Exception{
+		this.musica = new Musica(tituloMusica,5,"Pop");
+	}
+	
 	@Test
-	public void testMusica() {
-		try {
-			Musica chandelier = new Musica("Chandelier", 3, "Pop");
-			Musica elasticHeart = new Musica("Elastic Heart", 3, "Pop");
-			Musica cellophane = new Musica("Cellophane", 4, "Pop");
-
-			assertEquals("Chandelier", chandelier.getTitulo());
-			assertEquals(3, chandelier.getDuracao());
-			assertEquals("Pop", chandelier.getGenero());
-
-			assertEquals("Elastic Heart", elasticHeart.getTitulo());
-			assertEquals(3, elasticHeart.getDuracao());
-			assertEquals("Pop", elasticHeart.getGenero());
-
-			assertEquals("Cellophane", cellophane.getTitulo());
-			assertEquals(4, cellophane.getDuracao());
-			assertEquals("Pop", cellophane.getGenero());
-
-			Musica chandelierRemix = new Musica("Chandelier", 3, "Pop");
-			assertEquals(chandelier, chandelierRemix);
-			assertFalse(chandelier.equals(cellophane));
-
-		} catch (Exception e) {
-			fail();// nao deveria ter lancado nenhuma Exception nesse teste.
-		}
+	public void testGetTitulo(){
+		Assert.assertEquals(tituloMusica, musica.getTitulo());
 	}
 
 	@Test
-	public void testEquals() {
-		Musica chandelier;
-		try {
-			chandelier = new Musica("Chandelier", 3, "Pop");
-			Musica elasticHeart = new Musica("Elastic Heart", 3, "Pop");
-			Musica cellophane = new Musica("Cellophane", 4, "Pop");
-
-			assertEquals(chandelier, new Musica("Chandelier", 3, "Pop"));
-			assertEquals(chandelier, new Musica("Chandelier", 3, "Pop-rock"));
-			assertNotEquals(elasticHeart, chandelier);
-			assertNotEquals(elasticHeart, cellophane);
-		} catch (Exception e) {
-			fail("nao deve lancar excecao aqui.");
-		}
+	public void testGetGenero(){
+		Assert.assertEquals(generoEsperado, musica.getGenero());
+	}
+	
+	@Test
+	public void testGetDuracao(){
+		Assert.assertEquals(duracaoEsperada, musica.getDuracao());
+	}
+	
+	//note abaixo como eh o bom uso de exceptions em testes
+	@Test(expected = Exception.class)
+	public void testTituloVazio() throws Exception{
+		musica = new Musica("",5,"Pop");
+	}
+	
+	@Test(expected = Exception.class)
+	public void testTituloNull() throws Exception{
+		musica = new Musica(null,5,"Pop");
+	}
+	
+	@Test(expected = Exception.class)
+	public void testGeneroVazio() throws Exception{
+		musica = new Musica("Fly me to the moon.",5,"");
+	}
+	
+	@Test(expected = Exception.class)
+	public void testGeneroNull() throws Exception{
+		musica = new Musica("Fly me to the moon.",5,null);
+	}
+	
+	@Test(expected = Exception.class)
+	public void testDuracaoInvalida() throws Exception{
+		musica = new Musica("Fly me to the moon.",-5,"Forro");
 	}
 
-	@Test
-	public void testMusicaInvalida() {
-		try {
-			Musica tituloInvalido = new Musica("", 3, "Pop");
-			fail(); // se chegar aqui da erro, pois deveria lancar exception.
-		} catch (Exception e) {
-			assertEquals("Titulo da musica nao pode ser nulo ou vazio.", e.getMessage());
-		}
-
-		try {
-			Musica tituloInvalido = new Musica(null, 3, "Pop");
-			fail(); // se chegar aqui da erro, pois deveria lancar exception.
-		} catch (Exception e) {
-			assertEquals("Titulo da musica nao pode ser nulo ou vazio.", e.getMessage());
-		}
-
-		try {
-			Musica duracaoInvalida = new Musica("Elastic Heart", -5, "Pop");
-			fail(); // se chegar aqui da erro, pois deveria lancar exception.
-		} catch (Exception e) {
-			assertEquals("Duracao da musica nao pode ser negativa.", e.getMessage());
-		}
-
-		try {
-			Musica tipoInvalido = new Musica("Cellophane", 4, "");
-			fail(); // se chegar aqui da erro, pois deveria lancar exception.
-		} catch (Exception e) {
-			assertEquals("Genero da musica nao pode ser nulo ou vazio.", e.getMessage());
-		}
-
-		try {
-			Musica tipoInvalido = new Musica("Cellophane", 4, null);
-			fail(); // se chegar aqui da erro, pois deveria lancar exception.
-		} catch (Exception e) {
-			assertEquals("Genero da musica nao pode ser nulo ou vazio.", e.getMessage());
-		}
-
+	@Test(expected = Exception.class)
+	public void testDuracaoZero() throws Exception{
+		musica = new Musica("Fly me to the moon.",0,"Forro");
 	}
 }

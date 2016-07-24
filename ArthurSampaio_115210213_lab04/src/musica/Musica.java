@@ -61,17 +61,20 @@ public class Musica {
 		}
 	}
 	
+	
+
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + duracao;
-		result = prime * result + ((genero == null) ? 0 : genero.hashCode());
 		result = prime * result + ((titulo == null) ? 0 : titulo.hashCode());
 		return result;
 	}
 
-	public boolean equals(Object outraMusica){
+public boolean equals(Object outraMusica){
 		
 		if (outraMusica instanceof Musica){
 			Musica novaMusica = (Musica) outraMusica;
@@ -85,9 +88,9 @@ public class Musica {
 		}
 		
 	}
-	
+
 	public String toString(){
-		return String.format("Música: %s - %d minutos", this.titulo, this.duracao);
+		return String.format("%s (%s - %d minutos)", this.titulo,this.genero, this.duracao);
 		
 	}
 }

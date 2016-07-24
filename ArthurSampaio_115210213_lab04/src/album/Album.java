@@ -16,9 +16,13 @@ public class Album {
 		if (artista == null || artista.trim().isEmpty()){
 			throw new Exception("Artista do album nao pode ser nulo ou vazio.");
 		}
+		
+		if (titulo == null || titulo.trim().isEmpty()){
+			throw new Exception ("Titulo do album nao pode ser nulo ou vazio.");
+		}
 				
 		if (anoLancamento <= 1900){
-			throw new Exception ("O ano de lancamento do album não pode ser menor que 1900");
+			throw new Exception ("Ano de lancamento do album nao pode ser inferior a 1900.");
 		}
 		
 		
@@ -58,14 +62,14 @@ public class Album {
 	
 	public void setLancamento(int lancamento) throws Exception {
 		if (lancamento < 1900){
-			throw new Exception ("O ano de lancamento do album não pode ser menor que 1900");
+			throw new Exception ("Ano de lancamento do album nao pode ser inferior a 1900.");
 		}else{
 			this.lancamento = lancamento;
 		}
 	}
 	
 	// GET DURACAO
-	public int getDuracao(){
+	public int getDuracaoTotal(){
 		int duracao = 0;
 		
 		for(int i = 0; i < musicas.size(); i++){
@@ -84,13 +88,22 @@ public class Album {
 		
 		try{
 			Musica novaMusica = new Musica(titulo, duracao, genero);
-			musicas.add(novaMusica);
+			return musicas.add(novaMusica);
+			
 		}catch(Exception exception){
 			//exibindo mensagem
 			System.out.println(exception.getMessage());
 			
 		}
 		return false;
+	}
+	
+	public boolean adicionaMusica(Musica newMusic){
+		if (newMusic != null){
+			return musicas.add(newMusic);
+		}else{
+			return false;
+		}
 	}
 	
 	//Remove Música
@@ -127,19 +140,16 @@ public class Album {
 		
 	}
 	
-	//retorna um objeto música se existir uma com o respectivo nome 
-	public Musica getMusica(String musica) throws Exception{
-		if (musica == null || musica.trim().isEmpty()){
-			throw new Exception ("O Titulo da musica nao pode ser nulo ou vazio.");
-		}else{
-			for (int i = 0; i < musicas.size(); i++){
-				if(musicas.get(i).getTitulo().equals(musica)){
-					return musicas.get(i);
-				}
+	//return an object of type Music starting your title
+	public Musica getMusica(String titleMusic){
+		for (Musica music : this.musicas){
+			if (music.getTitulo().equals(titleMusic)){
+				return music;
 			}
-		return null;
-		}
+		}return null;
 	}
+	
+	
 	
 	//GETRS
 	public String getArtista() {
@@ -178,10 +188,18 @@ public class Album {
 	}
 
 	public String toString(){
-		return String.format("\nArtista: %s - Titulo: %s - Ano: %d", this.getArtista(),this.getTitulo(),this.getDuracao());
+		String toString; 
+		int counter = 0;
+		toString = this.getTitulo()+", "+this.getArtista() + "(" + this.getLancamento() + ")";
+		for (Musica music : this.musicas){
+			counter += 1;
+			toString += "\n" + counter + ". " + music.getTitulo() + "(" + music.getGenero() +  	"-" + music.getDuracao() +
+				"minutos)";
+		}
+		return toString;
 	}
 	
-	public boolean containsMusic(String nameMusic){
+	public boolean contemMusica(String nameMusic){
 		for (Musica musica : musicas){
 			if (musica.getTitulo().equals(nameMusic)){
 				return true;
@@ -189,4 +207,17 @@ public class Album {
 		}return false;
 	}
 	
+	public boolean removeMusica (int track){
+		track -= 1;
+		if (track < musicas.size()){
+			musicas.remove(track);
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public int quantidadeFaixas (){
+		return musicas.size();
+	}
 }
