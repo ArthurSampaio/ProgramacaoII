@@ -9,8 +9,8 @@ import musica.Musica;
 
 
 public class Musiteca {
-	private HashSet<Album> albuns = new HashSet<Album>();
-	private ArrayList<Album> favoritos = new ArrayList<Album>();
+	private HashSet<Album> meusAlbuns = new HashSet<Album>();
+	private HashSet<Album> favoritos = new HashSet<Album>();
 	private HashMap <String, Playlist> playlist = new HashMap<String, Playlist>();
 	
 	
@@ -19,16 +19,9 @@ public class Musiteca {
 	}
 	
 	//Adiciona ao Album passando por parametro um object do tipo Album
-	public boolean addAlbum(Object otherAlbum) throws Exception{
-		
-		if (otherAlbum == null){
-			throw new Exception("Album nao pode ser nulo");
-		}
-		
-		if (otherAlbum instanceof Album){
-			Album newAlbum = (Album) otherAlbum;
-			albuns.add(newAlbum);
-			return true;
+	public boolean addAlbum(Album newAlbum){
+		if (newAlbum != null){
+			return meusAlbuns.add(newAlbum);
 		}else{
 			return false;
 		}
@@ -47,18 +40,18 @@ public class Musiteca {
 	
 	
 	//pesquisa no album se há otherAlbum 
-	public boolean containsAlbum (Object otherAlbum){
-		if (otherAlbum instanceof Album){
-			return albuns.contains(otherAlbum);
-		}else{
-			return false;		
-		}
+	public boolean contemAlbum (Album otherAlbum){
+		for (Album album : this.meusAlbuns){
+			if (album.equals(otherAlbum)){
+				return true;
+			}
+		}return false;
 	}
 
 	//search for an album with "nameAlbum" 
 	//return the album or false, otherwise
 	public Album getAlbum (String nameAlbum){
-		for (Album album : this.albuns){
+		for (Album album : this.meusAlbuns){
 			if (album.getTitulo().equals(nameAlbum)){
 				return album;
 			}
@@ -71,11 +64,11 @@ public class Musiteca {
 			throw new Exception("Titulo do album nÃ£o pode ser nulo ou vazio.");
 		}
 		else{
-			//search for an album in albuns;
-			for (Album album : this.albuns){
+			//search for an album in meusAlbuns;
+			for (Album album : this.meusAlbuns){
 				if (album.getTitulo().equals(nameAlbum)){
 					//remove this album
-					return albuns.remove(album);
+					return meusAlbuns.remove(album);
 				}
 			}
 		return false;
@@ -88,7 +81,7 @@ public class Musiteca {
 			return false;
 		}
 		else{
-			for (Album album : albuns){
+			for (Album album : meusAlbuns){
 				if(album.getTitulo().equals(nameAlbum)){
 					album.addMusica(nameMusic, time, genre);
 					return true;
@@ -125,18 +118,14 @@ public class Musiteca {
 		}
 	}
 	
-	public void MakeTheFavorites(){
-		//make a for each in albuns 
-		for (Album album : this.albuns){
-			if (album.isFavorito()){
-				this.favoritos.add(album);
-			}
+	public boolean addAosFavoritos(Album otherAlbum){
+		if (this.meusAlbuns.contains(otherAlbum) && !(this.favoritos.contains(otherAlbum))){
+			return this.favoritos.add(otherAlbum);
+		}else{
+			return false;
 		}
 	}
 	
-	public ArrayList<Album> getAlbunsFavoritos(){
-		return this.favoritos;
-	}
 	
 	public boolean addPlaylist(Object otherPlaylist) throws Exception{
 		if (otherPlaylist == null){
@@ -158,49 +147,48 @@ public class Musiteca {
 		}
 	}
 
-	public boolean addPlaylist(String namePlaylist) throws Exception{
+	public boolean criaPlaylist(String namePlaylist){
 		if (namePlaylist == null || namePlaylist.trim().isEmpty()){
-			throw new Exception("Nome da playlist nao pode ser nulo ou vazio.");
+			return false;
 		}else{
-			Playlist newPlaylist = new Playlist(namePlaylist);
-			return addPlaylist(newPlaylist);
+			for(Map.Entry<String, Playlist> entry: this.playlist.entrySet()){
+				if (entry.getKey().equals(namePlaylist)){
+					return false;
+				}
+			}try{
+				Playlist newPlaylist = new Playlist(namePlaylist);
+				this.playlist.put(namePlaylist, newPlaylist);
+				return true;
+			}catch(Exception e){
+				System.out.println(e.getMessage());
+			}return false;
+			
 		}
 	}
 	
-	public boolean addMusicaToPlaylist (String namePlaylist, String nameAlbum, int track) throws Exception{
-		Playlist foundPlaylist;
+	public boolean addNaPlaylist (String namePlaylist, String nameAlbum, int track) throws Exception{
 		Album album;
 		Musica music;
 		
-		if (namePlaylist == null || namePlaylist.trim().isEmpty()){
-			throw new Exception("Nome da playlist nao pode ser nulo ou vazio.");
-		}
+		//cria uma playlist com o namePlaylist
+		this.criaPlaylist(namePlaylist);
 		
-		if (!(this.playlist.containsKey(namePlaylist))){
-			try{
-				foundPlaylist = new Playlist(namePlaylist);
-				this.playlist.put(namePlaylist, foundPlaylist);
-			}catch(Exception exception){
-				System.out.println(exception.getMessage());
-			}
-		}
 		if (this.getAlbum(nameAlbum) != null){
 			album = this.getAlbum(nameAlbum);
 			music = album.getMusica(track);
-			foundPlaylist = this.playlist.get(namePlaylist);
 			if (music != null){
-				if (foundPlaylist.addMusic(music)){
-					this.playlist.put(namePlaylist, foundPlaylist);
-					return true;
-				}else{
-					return false;
+				for(Album searchAlbum : this.meusAlbuns){
+					if (searchAlbum.getTitulo().equals(nameAlbum)){
+						searchAlbum.adicionaMusica(music);
+						return true;
+					}
 				}
 			}else{
 				return false;
 			}
-		}else{ 
+		}else{
 			throw new Exception("Album nao pertence ao Perfil especificado");
-		}
+		}return false;
 	}
 	
 	//search for a music in playlists
@@ -213,9 +201,9 @@ public class Musiteca {
 		}return null;		
 	}
 	
-	public Musica getMusicaFromAlbuns(String nameMusic){
-		for (Album album : this.albuns){
-			if (album.containsMusic(nameMusic)){
+	public Musica getMusicaFrommeusAlbuns(String nameMusic){
+		for (Album album : this.meusAlbuns){
+			if (album.contemMusica(nameMusic)){
 				try{
 					return album.getMusica(nameMusic);
 				}catch(Exception exception){
@@ -225,12 +213,12 @@ public class Musiteca {
 		}return null;
 	}
 	
-	public boolean containsPlaylist(Playlist otherPlaylist){
-		if (this.playlist.containsKey(otherPlaylist.getNamePlaylist())){
-			return true;
-		}else{
-			return false;			
-		}
+	public boolean contemPlaylist(String namePlaylist){
+		for(Map.Entry<String, Playlist> entry: this.playlist.entrySet()){
+			if (entry.getKey().equals(namePlaylist)){
+				return true;
+			}
+		}return false;
 	}
 	
 	public boolean removePlaylist(String namePlaylist){
@@ -259,7 +247,27 @@ public class Musiteca {
 		}return null;
 	}
 	
+	public int getQtdFavoritos(){
+		return this.favoritos.size();
+	}
 	
+	public int getTamPlaylist (String namePlaylist){
+		if (this.contemPlaylist(namePlaylist)){
+			for(Map.Entry<String, Playlist> entry: this.playlist.entrySet()){
+				if (entry.getKey().equals(namePlaylist)){
+					return entry.getValue().getTamanho();
+				}
+			}
+		
+		}return -1;
+	}
 	
+	public boolean contemNaPlaylist(String namePlaylist, String nameMusic){
+		if (this.contemPlaylist(namePlaylist)){
+			return this.playlist.get(namePlaylist).contemMusica(nameMusic);
+		}else{
+			return false;
+		}
+	}
 }
 	

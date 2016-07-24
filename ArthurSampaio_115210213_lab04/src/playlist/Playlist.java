@@ -45,5 +45,17 @@ public class Playlist {
 		}return false;
 	}
 	
+	public int getTamanho(){
+		return musicas.size();
+	}
+	
+	public boolean contemMusica (String nameMusic){
+		for (Musica musica : this.musicas){
+			if (musica.getTitulo().equals(nameMusic)){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 }
