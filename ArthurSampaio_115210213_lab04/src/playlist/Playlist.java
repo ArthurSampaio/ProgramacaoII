@@ -51,7 +51,7 @@ public class Playlist {
 	
 	public boolean contemMusica (String nameMusic){
 		for (Musica musica : this.musicas){
-			if (musica.getTitulo().equals(nameMusic)){
+			if (musica.getTitulo().equalsIgnoreCase(nameMusic)){
 				return true;
 			}
 		}

@@ -249,13 +249,19 @@ public class Musiteca {
 	
 	public int getTamPlaylist (String namePlaylist){
 		if (this.contemPlaylist(namePlaylist)){
-			for(Map.Entry<String, Playlist> entry: this.playlist.entrySet()){
-				if (entry.getKey().equalsIgnoreCase(namePlaylist)){
-					return entry.getValue().getTamanho();
+			
+			
+			if (this.contemPlaylist(namePlaylist)){
+				for(Map.Entry<String, Playlist> entry: this.playlist.entrySet()){
+					if (entry.getKey().equalsIgnoreCase(namePlaylist)){
+						return entry.getValue().getTamanho();
+					}
 				}
-			}
-		
-		}return -1;
+			
+			}return -1;
+		}else{
+			return -1;
+		}
 	}
 	
 	public boolean contemNaPaylist(String namePlaylist, String nameMusic){
