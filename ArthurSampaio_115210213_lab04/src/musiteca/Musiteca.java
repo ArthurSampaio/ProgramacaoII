@@ -50,9 +50,10 @@ public class Musiteca {
 
 	//search for an album with "nameAlbum" 
 	//return the album or false, otherwise
+	
 	public Album getAlbum (String nameAlbum){
 		for (Album album : this.meusAlbuns){
-			if (album.getTitulo().equals(nameAlbum)){
+			if (album.getTitulo().equalsIgnoreCase(nameAlbum)){
 				return album;
 			}
 		}return null;  
@@ -167,28 +168,23 @@ public class Musiteca {
 	}
 	
 	public boolean addNaPlaylist (String namePlaylist, String nameAlbum, int track) throws Exception{
-		Album album;
 		Musica music;
+		this.criaPlaylist(namePlaylist);		//cria uma playlist com o namePlaylist
+			
 		
-		//cria uma playlist com o namePlaylist
-		this.criaPlaylist(namePlaylist);
-		
-		if (this.getAlbum(nameAlbum) != null){
-			album = this.getAlbum(nameAlbum);
+		if (this.getAlbum(nameAlbum) instanceof Album){
+			Album album = (Album) this.getAlbum(nameAlbum);
+			
 			music = album.getMusica(track);
 			if (music != null){
-				for(Album searchAlbum : this.meusAlbuns){
-					if (searchAlbum.getTitulo().equals(nameAlbum)){
-						searchAlbum.adicionaMusica(music);
-						return true;
-					}
-				}
+				//add music in playlist namePlaylist
+				return this.playlist.get(namePlaylist).addMusic(music);
 			}else{
 				return false;
 			}
 		}else{
-			throw new Exception("Album nao pertence ao Perfil especificado");
-		}return false;
+			return false;
+		}
 	}
 	
 	//search for a music in playlists
@@ -201,7 +197,7 @@ public class Musiteca {
 		}return null;		
 	}
 	
-	public Musica getMusicaFrommeusAlbuns(String nameMusic){
+	public Musica getMusicaFromMeusAlbuns(String nameMusic){
 		for (Album album : this.meusAlbuns){
 			if (album.contemMusica(nameMusic)){
 				try{
@@ -254,7 +250,7 @@ public class Musiteca {
 	public int getTamPlaylist (String namePlaylist){
 		if (this.contemPlaylist(namePlaylist)){
 			for(Map.Entry<String, Playlist> entry: this.playlist.entrySet()){
-				if (entry.getKey().equals(namePlaylist)){
+				if (entry.getKey().equalsIgnoreCase(namePlaylist)){
 					return entry.getValue().getTamanho();
 				}
 			}
@@ -262,7 +258,7 @@ public class Musiteca {
 		}return -1;
 	}
 	
-	public boolean contemNaPlaylist(String namePlaylist, String nameMusic){
+	public boolean contemNaPaylist(String namePlaylist, String nameMusic){
 		if (this.contemPlaylist(namePlaylist)){
 			return this.playlist.get(namePlaylist).contemMusica(nameMusic);
 		}else{

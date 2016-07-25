@@ -1,18 +1,14 @@
 package musiteca;
 import playlist.Playlist;
-
 import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import album.Album;
 import musica.Musica;
+import playlist.Playlist;
 
-import java.util.LinkedList;
-import java.util.List;
-import org.junit.Before;
-import org.junit.Test;
-
-import org.junit.Before;
-import org.junit.Test;
 
 public class MusitecaTest {
 
@@ -24,12 +20,12 @@ public class MusitecaTest {
 	}
 
 	@Test
-	public void testCriaAlbum() {
+	public void testCriaAlbum() throws Exception{
 		Album lemonade = new Album("Beyounce", "Lemonade", 2015);
 		Musica sorry = new Musica("Sorry", 5, "Pop");
 		Musica formation = new Musica("Formation", 4, "Pop");
-		album.adicionaMusica(sorry);
-		album.adicionaMusica(formation);
+		lemonade.adicionaMusica(sorry);
+		lemonade.adicionaMusica(formation);
 
 		// nao pode adicionar albuns repetidos.
 		assertTrue(musiteca.addAlbum(lemonade));
@@ -37,7 +33,7 @@ public class MusitecaTest {
 	}
 
 	@Test
-	public void testFavoritaAlbum() {
+	public void testFavoritaAlbum() throws Exception{
 
 		Album perfilMarilia = new Album("Marilia Mendonca", "Perfil", 2015);
 
@@ -64,7 +60,7 @@ public class MusitecaTest {
 	}
 
 	@Test
-	public void pesquisaMusica() {
+	public void pesquisaMusica()throws Exception {
 
 		Musica sentimentoLouco = new Musica("Sentimento louco", 3, "Sertanejo");
 		Album mariliaLive = new Album("Marilia Mendonca", "DVD Ao vivo", 2015);

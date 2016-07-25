@@ -126,10 +126,11 @@ public class Album {
 	
 	//retorna um objeto música, apartir da faixa da sua música. 
 	public Musica getMusica(int faixa) throws Exception{
-		if (faixa <= 0){
+		faixa -= 1;
+		if (faixa < 0){
 			throw new Exception ("A faixa nao pode ser menor ou igual a zero.");
 		}else{
-			faixa -= 1;   //para o usuário a faixa começa de 1, para o desenvolvedor começa de 0
+			  //para o usuário a faixa começa de 1, para o desenvolvedor começa de 0
 			for (int i = 0; i < musicas.size(); i ++){
 				if (musicas.get(i).getTitulo().equals(musicas.get(faixa).getTitulo())){
 					return musicas.get(i);
