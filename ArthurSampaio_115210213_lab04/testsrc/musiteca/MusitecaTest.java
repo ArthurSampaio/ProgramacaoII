@@ -1,10 +1,7 @@
 package musiteca;
-import playlist.Playlist;
 import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import album.Album;
 import musica.Musica;
 import playlist.Playlist;
@@ -49,7 +46,7 @@ public class MusitecaTest {
 	}
 
 	@Test
-	public void testCriaEAddPlaylist() {
+	public void testCriaEAddPlaylist() throws Exception {
 		// cria uma playlist vazia, mas nao pode
 		// criar mais de uma playlist com
 		// o mesmo titulo.

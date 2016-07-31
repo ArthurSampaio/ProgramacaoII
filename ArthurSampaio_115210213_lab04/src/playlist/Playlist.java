@@ -73,5 +73,47 @@ public class Playlist {
 		}
 		return false;
 	}
+
+	/**
+	 * Hash Code
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((musicas == null) ? 0 : musicas.hashCode());
+		return result;
+	}
+
+	/**
+	 * Equals
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Playlist){
+			Playlist newPlaylist = (Playlist) obj;
+			if (this.getTamanho() == newPlaylist.getTamanho()){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * To string
+	 */
+	public String toString(){
+		String toString = ""; 
+		int counter = 0;
+		for (Musica music : this.musicas){
+			counter += 1;
+			toString += "\n" + counter + ". " + music.getTitulo() + "(" + music.getGenero() +  	"-" + music.getDuracao() +
+				"minutos)";
+		}
+		return toString;
+	}
 	
 }

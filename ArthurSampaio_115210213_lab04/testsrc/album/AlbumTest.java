@@ -1,15 +1,9 @@
 package album;
 import album.Album;
-
-import static org.junit.Assert.*;
-
+import musica.Musica;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-	import org.junit.Assert;
-
-
-import album.Album;
-import musica.Musica;
 
 public class AlbumTest {
 
@@ -17,7 +11,7 @@ public class AlbumTest {
 
 	@Before
 	public void setUp() throws Exception {
-		mariliaMendDVD = new Album("Marilia Mendonca- Audio DVD", "Marilia Mendoca", 2015);
+		mariliaMendDVD = new Album("Marilia Mendonca", "Marilia Mendonca- Audio DVD", 2015);
 	}
 	
 	@Test
@@ -108,6 +102,7 @@ public class AlbumTest {
 
 		mariliaMendDVD.removeMusica(1);
 		Assert.assertFalse(mariliaMendDVD.contemMusica("Alo porteiro"));
+
 	}
 
 	@Test
@@ -140,7 +135,7 @@ public class AlbumTest {
 		Musica meuCupidoEhGari = new Musica("Meu cupido eh gari", 5, "Sertanejo");
 		mariliaMendDVD.adicionaMusica(meuCupidoEhGari);
 
-		Album mariliaMendDVD2 = new Album("Marilia Mendonca- Audio DVD", "Marilia Mendoca", 2015);
+		Album mariliaMendDVD2 = new Album("Marilia Mendonca", "Marilia Mendonca- Audio DVD", 2015);
 		Assert.assertTrue(mariliaMendDVD.equals(mariliaMendDVD2));
 	}
 	

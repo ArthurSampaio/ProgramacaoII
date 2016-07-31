@@ -77,7 +77,10 @@ public class Musiteca {
 	 * @return
 	 * 		return the album or null, otherwise
 	 */
-	public Album getAlbum (String nameAlbum){
+	public Album getAlbum (String nameAlbum) throws Exception{
+		if (nameAlbum == null || nameAlbum.trim().isEmpty()){
+			throw new Exception("O nome do album nao pode ser nulo ou vazio");
+		}
 		for (Album album : this.meusAlbuns){
 			if (album.getTitulo().equalsIgnoreCase(nameAlbum)){
 				return album;
@@ -119,7 +122,7 @@ public class Musiteca {
 	 * 		the genre of music
 	 * @return
 	 */
-	public boolean addMusicaToAlbum(String nameAlbum, String nameMusic, int time, String genre){
+	public boolean addMusicaToAlbum(String nameAlbum, String nameMusic, int time, String genre) throws Exception{
 		if (this.getAlbum(nameAlbum) == null){
 			return false;
 		}
@@ -142,7 +145,7 @@ public class Musiteca {
 	 * @return
 	 * 		return the success of operation
 	 */
-	public boolean removeMusicaFromAlbum(String nameAlbum, String nameMusic){
+	public boolean removeMusicaFromAlbum(String nameAlbum, String nameMusic) throws Exception{
 		if (this.getAlbum(nameAlbum) != null){
 			Album album = this.getAlbum(nameAlbum);
 			return album.removeMusica(nameMusic);
@@ -227,7 +230,10 @@ public class Musiteca {
 	 * @return
 	 * 		return a object Musica or null
 	 */
-	public Musica getMusicaFromPlaylists(String nameMusic){
+	public Musica getMusicaFromPlaylists(String nameMusic) throws Exception{
+		if (nameMusic == null || nameMusic.trim().isEmpty()){
+			throw new Exception("Nome da musica não pode ser nulo ou vazio");
+		}
 		for(Map.Entry<String, Playlist> entry: this.playlist.entrySet()){
 			if (entry.getValue().getMusica(nameMusic) != null){
 				return entry.getValue().getMusica(nameMusic);
@@ -242,7 +248,10 @@ public class Musiteca {
 	 * @return
 	 * 		return a object Musica or null
 	 */
-	public Musica getMusicaFromMeusAlbuns(String nameMusic){
+	public Musica getMusicaFromMeusAlbuns(String nameMusic) throws Exception{
+		if (nameMusic == null || nameMusic.trim().isEmpty()){
+			throw new Exception("Nome da musica nao pode ser nulo ou vazio");
+		}
 		for (Album album : this.meusAlbuns){
 			if (album.contemMusica(nameMusic)){
 				try{
@@ -260,7 +269,10 @@ public class Musiteca {
 	 * 		the name of playlist
 	 * @return
 	 */
-	public boolean contemPlaylist(String namePlaylist){
+	public boolean contemPlaylist(String namePlaylist) throws Exception{
+		if (namePlaylist == null || namePlaylist.trim().isEmpty()){
+			throw new Exception("Nome da musica não pode ser nulo ou vazio");
+		}
 		for(Map.Entry<String, Playlist> entry: this.playlist.entrySet()){
 			if (entry.getKey().equals(namePlaylist)){
 				return true;
@@ -274,7 +286,10 @@ public class Musiteca {
 	 * @return
 	 * 		the success of operation
 	 */
-	public boolean removePlaylist(String namePlaylist){
+	public boolean removePlaylist(String namePlaylist) throws Exception{
+		if (namePlaylist == null || namePlaylist.trim().isEmpty()){
+			throw new Exception("Nome da playlist nao pode ser nulo ou vazio");
+		}
 		if (this.playlist.containsKey(namePlaylist)){
 			this.playlist.remove(namePlaylist);
 			return true;
@@ -331,7 +346,13 @@ public class Musiteca {
 	 * 		name of music
 	 * @return
 	 */
-	public boolean contemNaPaylist(String namePlaylist, String nameMusic){
+	public boolean contemNaPaylist(String namePlaylist, String nameMusic) throws Exception{
+		if (namePlaylist == null || namePlaylist.trim().isEmpty()){
+			throw new Exception("O nome da playlist nao pode ser nula ou vazia");
+		}
+		if (nameMusic == null || nameMusic.trim().isEmpty()){
+			throw new Exception("O nome da música nao pode ser nula ou vazia");
+		}
 		if (this.contemPlaylist(namePlaylist)){
 			return this.playlist.get(namePlaylist).contemMusica(nameMusic);
 		}else{
@@ -352,6 +373,42 @@ public class Musiteca {
 		}return FALSE;
 	}
 
+	
+	/**
+	 * HashCode
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((favoritos == null) ? 0 : favoritos.hashCode());
+		result = prime * result + ((meusAlbuns == null) ? 0 : meusAlbuns.hashCode());
+		result = prime * result + ((playlist == null) ? 0 : playlist.hashCode());
+		return result;
+	}
+	
+	/**
+	 * Equals
+	 */
+
+	@Override
+	/**
+	 * this.equals(obj) are true, if the quantity of favorites is equals
+	 */
+	public boolean equals(Object obj) {
+		if (obj instanceof Musiteca){
+			Musiteca musiteca = (Musiteca) obj;
+			if (this.getQtdFavoritos() == musiteca.getQtdFavoritos()){
+				return true;
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+
+	
 
 }
 	
