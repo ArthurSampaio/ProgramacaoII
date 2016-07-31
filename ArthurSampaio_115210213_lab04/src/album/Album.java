@@ -2,7 +2,7 @@ package album;
 import musica.Musica;
 import java.util.*;
 
-public class Album {
+public class Album{
 	
 	private String artista;
 	private String titulo;
@@ -272,7 +272,8 @@ public class Album {
 	public boolean equals(Object outroObjeto) {
 		if (outroObjeto instanceof Album){
 			Album outroAlbum = (Album)outroObjeto;
-			if (outroAlbum.getTitulo().equals(this.titulo) && outroAlbum.getArtista().equals(this.artista)){
+			if (outroAlbum.getTitulo().equals(this.titulo) && outroAlbum.getArtista().equals(this.artista) &&
+					outroAlbum.getLancamento() == this.getLancamento()){
 				return true;
 			}else{
 				return false;
@@ -332,4 +333,6 @@ public class Album {
 	public int quantidadeFaixas (){
 		return musicas.size();
 	}
+	
+	
 }
