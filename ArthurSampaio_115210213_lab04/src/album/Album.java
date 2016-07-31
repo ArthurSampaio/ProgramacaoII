@@ -9,8 +9,20 @@ public class Album {
 	private int lancamento;
 	private ArrayList<Musica> musicas = new ArrayList <Musica>();
 	private boolean favorito;
-	
-	//Contrutor com todos os parâmetros
+
+	/**
+	 * Constructor of class Album
+	 * @param artista
+	 * 		name of artist who composed the album	
+	 * @param titulo
+	 * 		the title of algum
+	 * @param anoLancamento
+	 * 		release year of album 
+	 * @param favorito
+	 * 		if the album is the favorite of the client
+	 * @throws Exception
+	 * 		when strings are null or empty, and release year is <= 1900
+	 */
 	public Album (String artista, String titulo, int anoLancamento, boolean favorito) throws Exception{
 		
 		if (artista == null || artista.trim().isEmpty()){
@@ -33,17 +45,33 @@ public class Album {
 		
 	}
 	
-	//Contrutor com apenas três parâmetros
+	/**
+	 * constructor with 3 parameters 
+	 @param artista
+	 * 		name of artist who composed the album	
+	 * @param titulo
+	 * 		the title of algum
+	 * @param anoLancamento
+	 * 		release year of album 
+	 */
 	public Album (String artista, String titulo, int anoLancamento) throws Exception{
 		this(artista, titulo, anoLancamento, false);
-	
 	}
 
-	//SETRS
+	/**
+	 * change the value "favorite"
+	 * @param escolha
+	 */
 	public void setFavorito(boolean escolha){
 		this.favorito = escolha;
 	}
 	
+	/**
+	 * change the name of artist 
+	 * @param artista
+	 * 		new name of artist
+	 * @throws Exception
+	 */
 	public void setArtista(String artista) throws Exception {
 		if (artista == null || artista.trim().isEmpty()){
 			throw new Exception("Artista do album nao pode ser nulo ou vazio.");
@@ -52,6 +80,13 @@ public class Album {
 		}
 	}
 	
+	/**
+	 * change the title of album
+	 * @param titulo
+	 * 		new title
+	 * @throws Exception
+	 * 		when title is null or empty
+	 */
 	public void setTitulo(String titulo) throws Exception {
 		if (titulo == null || titulo.trim().isEmpty()){
 			throw new Exception ("Titulo do album nao pode ser nulo ou vazio.");
@@ -59,7 +94,13 @@ public class Album {
 			this.titulo = titulo;
 		}
 	}
-	
+	/**
+	 * change the value of release year
+	 * @param lancamento
+	 * 		new release year
+	 * @throws Exception
+	 * 		if year <= 1900
+	 */
 	public void setLancamento(int lancamento) throws Exception {
 		if (lancamento < 1900){
 			throw new Exception ("Ano de lancamento do album nao pode ser inferior a 1900.");
@@ -68,7 +109,11 @@ public class Album {
 		}
 	}
 	
-	// GET DURACAO
+	/**
+	 * return the all duration of album
+	 * @return 
+	 * 		album's duration
+	 */
 	public int getDuracaoTotal(){
 		int duracao = 0;
 		
@@ -78,12 +123,24 @@ public class Album {
 		return duracao;
 	}
 	
-	//Verifica se é favorito
+	/**
+	 * checks if album is favorite
+	 * @return
+	 */
 	public boolean isFavorito(){
 		return this.favorito;
 	}
 	
-	//Adiciona Música	
+	/**
+	 * Add music on the album. Receive the title, time and genre of new music
+	 * @param titulo
+	 * 		title of new music
+	 * @param duracao
+	 * 		time of new music
+	 * @param genero
+	 * 		genre of music
+	 * @return
+	 */
 	public boolean addMusica(String titulo, int duracao, String genero){
 		
 		try{
@@ -98,6 +155,12 @@ public class Album {
 		return false;
 	}
 	
+	/**
+	 * Add music on the album. Receive the object musica
+	 * @param newMusic
+	 * 		new object musica
+	 * @return
+	 */
 	public boolean adicionaMusica(Musica newMusic){
 		if (newMusic != null){
 			return musicas.add(newMusic);
@@ -106,9 +169,13 @@ public class Album {
 		}
 	}
 	
-	//Remove Música
+	/**
+	 * Remove a music, if exist, on the album
+	 * @param tituloMusica
+	 * 		title of music it will be removed on the album
+	 * @return
+	 */
 	public boolean removeMusica(String tituloMusica){
-		
 		if (tituloMusica == null || tituloMusica.trim().isEmpty()){
 			return false;
 		}
@@ -122,9 +189,15 @@ public class Album {
 			return false;
 		}	
 	}
-
 	
-	//retorna um objeto música, apartir da faixa da sua música. 
+	/**
+	 * return a music since a track of album
+	 * @param faixa
+	 * 		number of track
+	 * @return
+	 * @throws Exception
+	 * 		if track <= 0
+	 */
 	public Musica getMusica(int faixa) throws Exception{
 		faixa -= 1;
 		if (faixa < 0){
@@ -141,7 +214,12 @@ public class Album {
 		
 	}
 	
-	//return an object of type Music starting your title
+	/**
+	 * //return an object of type Music with your title "titleMusic"
+	 * @param titleMusic
+	 * 		title of the music
+	 * @return
+	 */
 	public Musica getMusica(String titleMusic){
 		for (Musica music : this.musicas){
 			if (music.getTitulo().equals(titleMusic)){
@@ -149,22 +227,35 @@ public class Album {
 			}
 		}return null;
 	}
-	
-	
-	
-	//GETRS
+		
+	/**
+	 * return the name of artist
+	 * @return
+	 * 		return a string with name
+	 */
 	public String getArtista() {
 		return this.artista;
 	}
 
+	/**
+	 * return the title of the album
+	 * @return
+	 */
 	public String getTitulo() {
 		return this.titulo;
 	}
 
+	/**
+	 * return the release year of album
+	 * @return
+	 */
 	public int getLancamento() {
 		return this.lancamento;
 	}
 
+	/**
+	 * Hash Code
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -174,6 +265,9 @@ public class Album {
 		return result;
 	}
 
+	/**
+	 * Equals 
+	 */
 	@Override
 	public boolean equals(Object outroObjeto) {
 		if (outroObjeto instanceof Album){
@@ -188,6 +282,9 @@ public class Album {
 		}
 	}
 
+	/**
+	 * String representation of album
+	 */
 	public String toString(){
 		String toString; 
 		int counter = 0;
@@ -200,6 +297,11 @@ public class Album {
 		return toString;
 	}
 	
+	/**
+	 * Contain music "nameMusic" in the album? 
+	 * @param nameMusic
+	 * @return
+	 */
 	public boolean contemMusica(String nameMusic){
 		for (Musica musica : musicas){
 			if (musica.getTitulo().equals(nameMusic)){
@@ -208,6 +310,11 @@ public class Album {
 		}return false;
 	}
 	
+	/**
+	 * Remove a music since a track	
+	 * @param track
+	 * @return
+	 */
 	public boolean removeMusica (int track){
 		track -= 1;
 		if (track < musicas.size()){
@@ -218,6 +325,10 @@ public class Album {
 		}
 	}
 	
+	/**
+	 * return the quantity of tracks on the album 
+	 * @return
+	 */
 	public int quantidadeFaixas (){
 		return musicas.size();
 	}
